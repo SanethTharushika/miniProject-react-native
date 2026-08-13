@@ -2,59 +2,18 @@ import { Stack } from "expo-router";
 
 export default function RootLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "#111827",
-        },
-        headerTintColor: "#ffffff",
-        headerTitleStyle: {
-          fontWeight: "700",
-        },
-        contentStyle: {
-          backgroundColor: "#F5F7FB",
-        },
-      }}
-    >
+    <Stack>
       <Stack.Screen
-        name="index"
+        name="(tabs)"
         options={{
           headerShown: false,
         }}
       />
 
       <Stack.Screen
-        name="floors"
-        options={{
-          title: "Floors",
-        }}
-      />
-
-      <Stack.Screen
         name="devices"
         options={{
-          title: "Smart Devices",
-        }}
-      />
-
-      <Stack.Screen
-        name="automation"
-        options={{
-          title: "Automation",
-        }}
-      />
-
-      <Stack.Screen
-        name="reports"
-        options={{
-          title: "Reports",
-        }}
-      />
-
-      <Stack.Screen
-        name="alerts"
-        options={{
-          title: "Alerts",
+          title: "Devices",
         }}
       />
 
@@ -62,6 +21,13 @@ export default function RootLayout() {
         name="floor/[id]"
         options={{
           title: "Floor Details",
+        }}
+      />
+
+      <Stack.Screen
+        name="device/[id]"
+        options={{
+          title: "Device Details",
         }}
       />
     </Stack>
