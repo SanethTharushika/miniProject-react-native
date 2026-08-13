@@ -13,9 +13,20 @@ export type DeviceType =
 
 export interface Device {
   id: string;
+
   name: string;
+
   floorId: string;
+
+  room?: string;
+
   type: DeviceType;
+
   status: DeviceStatus;
+
   power?: number;
+
+  maxOnDuration?: number;
+
+  turnedOnAt?: number | null;
 }

@@ -1,18 +1,69 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from "expo-router";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
-
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#111827",
+        },
+        headerTintColor: "#ffffff",
+        headerTitleStyle: {
+          fontWeight: "700",
+        },
+        contentStyle: {
+          backgroundColor: "#F5F7FB",
+        },
+      }}
+    >
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="floors"
+        options={{
+          title: "Floors",
+        }}
+      />
+
+      <Stack.Screen
+        name="devices"
+        options={{
+          title: "Smart Devices",
+        }}
+      />
+
+      <Stack.Screen
+        name="automation"
+        options={{
+          title: "Automation",
+        }}
+      />
+
+      <Stack.Screen
+        name="reports"
+        options={{
+          title: "Reports",
+        }}
+      />
+
+      <Stack.Screen
+        name="alerts"
+        options={{
+          title: "Alerts",
+        }}
+      />
+
+      <Stack.Screen
+        name="floor/[id]"
+        options={{
+          title: "Floor Details",
+        }}
+      />
+    </Stack>
   );
 }
