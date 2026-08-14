@@ -6,6 +6,8 @@ import {
   View,
 } from "react-native";
 
+import { router } from "expo-router";
+
 import { Device } from "../types/Device";
 
 import {
@@ -22,6 +24,9 @@ export default function DeviceCard({
   const isOn =
     device.status === "ON";
 
+  const isCamera =
+    device.type === "CAMERA";
+
   const handleToggle = async () => {
     try {
       await toggleDevice(device);
@@ -36,6 +41,10 @@ export default function DeviceCard({
         "Unable to update the device."
       );
     }
+  };
+
+  const handleCameraPress = () => {
+    router.push(`/camera/${device.id}`);
   };
 
   return (
@@ -69,27 +78,44 @@ export default function DeviceCard({
         Floor: {device.floorId}
       </Text>
 
+      {device.room && (
+        <Text style={styles.info}>
+          Room: {device.room}
+        </Text>
+      )}
+
       {device.power !== undefined && (
         <Text style={styles.info}>
           Power: {device.power} W
         </Text>
       )}
 
-      <Pressable
-        style={[
-          styles.button,
-          isOn
-            ? styles.offButton
-            : styles.onButton,
-        ]}
-        onPress={handleToggle}
-      >
-        <Text style={styles.buttonText}>
-          {isOn
-            ? "Turn OFF"
-            : "Turn ON"}
-        </Text>
-      </Pressable>
+      {isCamera ? (
+        <Pressable
+          style={styles.cameraButton}
+          onPress={handleCameraPress}
+        >
+          <Text style={styles.buttonText}>
+            View Camera
+          </Text>
+        </Pressable>
+      ) : (
+        <Pressable
+          style={[
+            styles.button,
+            isOn
+              ? styles.offButton
+              : styles.onButton,
+          ]}
+          onPress={handleToggle}
+        >
+          <Text style={styles.buttonText}>
+            {isOn
+              ? "Turn OFF"
+              : "Turn ON"}
+          </Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -168,6 +194,13 @@ const styles =
 
     offButton: {
       backgroundColor: "#dc2626",
+    },
+
+    cameraButton: {
+      paddingVertical: 13,
+      borderRadius: 12,
+      marginTop: 15,
+      backgroundColor: "#2563eb",
     },
 
     buttonText: {
