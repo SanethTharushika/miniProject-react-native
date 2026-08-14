@@ -9,12 +9,18 @@ import { Floor } from "../types/Floor";
 export function subscribeToFloors(
   callback: (floors: Floor[]) => void
 ) {
-  const floorsRef = ref(database, "floors");
+  const floorsRef =
+    ref(database, "floors");
 
-  const unsubscribe = onValue(
+  return onValue(
     floorsRef,
     (snapshot) => {
       const data = snapshot.val();
+
+      console.log(
+        "🔥 Floors from Firebase:",
+        data
+      );
 
       if (!data) {
         callback([]);
@@ -30,8 +36,14 @@ export function subscribeToFloors(
         );
 
       callback(floors);
+    },
+    (error) => {
+      console.error(
+        "❌ Floor Firebase error:",
+        error
+      );
+
+      callback([]);
     }
   );
-
-  return unsubscribe;
 }

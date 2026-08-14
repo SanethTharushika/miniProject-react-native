@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/devicesimulatorcard.tsx","./src/components/eventlog.tsx","./src/components/floorpanel.tsx","./src/config/firebase.ts","./src/services/simulatorservice.ts","./src/types/device.ts","./vite.config.ts"],"version":"5.9.3"}

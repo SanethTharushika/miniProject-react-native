@@ -12,28 +12,40 @@ export function subscribeToDevices(
 ) {
   const devicesRef = ref(database, "devices");
 
-  const unsubscribe = onValue(
+  return onValue(
     devicesRef,
     (snapshot) => {
       const data = snapshot.val();
+
+      console.log(
+        "🔥 Devices from Firebase:",
+        data
+      );
 
       if (!data) {
         callback([]);
         return;
       }
 
-      const devices: Device[] = Object.entries(
-        data
-      ).map(([id, value]) => ({
-        id,
-        ...(value as Omit<Device, "id">),
-      }));
+      const devices: Device[] =
+        Object.entries(data).map(
+          ([id, value]) => ({
+            id,
+            ...(value as Omit<Device, "id">),
+          })
+        );
 
       callback(devices);
+    },
+    (error) => {
+      console.error(
+        "❌ Device Firebase error:",
+        error
+      );
+
+      callback([]);
     }
   );
-
-  return unsubscribe;
 }
 
 export async function toggleDevice(
@@ -44,12 +56,13 @@ export async function toggleDevice(
       ? "OFF"
       : "ON";
 
-  const deviceRef = ref(
-    database,
-    `devices/${device.id}`
+  await update(
+    ref(
+      database,
+      `devices/${device.id}`
+    ),
+    {
+      status: newStatus,
+    }
   );
-
-  await update(deviceRef, {
-    status: newStatus,
-  });
 }

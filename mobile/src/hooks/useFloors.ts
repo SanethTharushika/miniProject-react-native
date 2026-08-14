@@ -4,7 +4,10 @@ import {
 } from "react";
 
 import { Floor } from "../types/Floor";
-import { subscribeToFloors } from "../services/floorService";
+
+import {
+  subscribeToFloors,
+} from "../services/floorService";
 
 export function useFloors() {
   const [floors, setFloors] =
