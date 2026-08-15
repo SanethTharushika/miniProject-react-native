@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
+
 import {
   ActivityIndicator,
+  Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Switch,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
 import {
   onValue,
   ref,
+  remove,
   update,
 } from "firebase/database";
+
+import { router } from "expo-router";
 
 import { database } from "../config/firebase";
 
@@ -87,7 +93,51 @@ export default function AutomationScreen() {
         "Schedule update error:",
         error
       );
+
+      Alert.alert(
+        "Error",
+        "Unable to update automation."
+      );
     }
+  };
+
+  const deleteSchedule = (
+    schedule: Schedule
+  ) => {
+    Alert.alert(
+      "Delete Automation",
+      `Delete "${schedule.name}"?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await remove(
+                ref(
+                  database,
+                  `schedules/${schedule.id}`
+                )
+              );
+            } catch (error) {
+              console.error(
+                "Delete schedule error:",
+                error
+              );
+
+              Alert.alert(
+                "Error",
+                "Unable to delete automation."
+              );
+            }
+          },
+        },
+      ]
+    );
   };
 
   if (loading) {
@@ -105,6 +155,12 @@ export default function AutomationScreen() {
     );
   }
 
+  const enabledCount =
+    schedules.filter(
+      (schedule) =>
+        schedule.enabled
+    ).length;
+
   return (
     <SafeAreaView
       style={styles.container}
@@ -118,50 +174,108 @@ export default function AutomationScreen() {
         }
       >
         <View style={styles.header}>
-          <Text style={styles.label}>
-            SMARTNEST
-          </Text>
+          <View>
+            <Text style={styles.label}>
+              SMARTNEST
+            </Text>
 
-          <Text style={styles.title}>
-            Automation
-          </Text>
+            <Text style={styles.title}>
+              Automation
+            </Text>
 
-          <Text style={styles.subtitle}>
-            Manage schedules and automatic
-            smart-home actions
-          </Text>
+            <Text style={styles.subtitle}>
+              Manage schedules and automatic
+              smart-home actions
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() =>
+              router.push(
+                "/add-automation"
+              )
+            }
+          >
+            <Text
+              style={
+                styles.addButtonText
+              }
+            >
+              +
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.summaryCard}>
           <View>
-            <Text style={styles.summaryLabel}>
+            <Text
+              style={
+                styles.summaryLabel
+              }
+            >
               Automation Rules
             </Text>
 
-            <Text style={styles.summaryValue}>
+            <Text
+              style={
+                styles.summaryValue
+              }
+            >
               {schedules.length}
             </Text>
           </View>
 
+          <View style={styles.divider} />
+
           <View>
-            <Text style={styles.summaryLabel}>
+            <Text
+              style={
+                styles.summaryLabel
+              }
+            >
               Enabled
             </Text>
 
-            <Text style={styles.summaryValue}>
-              {
-                schedules.filter(
-                  (schedule) =>
-                    schedule.enabled
-                ).length
+            <Text
+              style={
+                styles.summaryValue
               }
+            >
+              {enabledCount}
             </Text>
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>
-          Schedules
-        </Text>
+        <View
+          style={
+            styles.sectionHeader
+          }
+        >
+          <Text
+            style={
+              styles.sectionTitle
+            }
+          >
+            Schedules
+          </Text>
+
+          <TouchableOpacity
+            onPress={() =>
+              router.push(
+                "/add-automation"
+              )
+            }
+          >
+            <Text
+              style={
+                styles.sectionAction
+              }
+            >
+              + New
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         {schedules.length === 0 ? (
           <View style={styles.emptyCard}>
@@ -174,15 +288,37 @@ export default function AutomationScreen() {
             </Text>
 
             <Text style={styles.emptyText}>
-              Automation schedules created
-              in Firebase will appear here.
+              Create your first automation
+              rule to control a device
+              automatically.
             </Text>
+
+            <TouchableOpacity
+              style={
+                styles.emptyButton
+              }
+              onPress={() =>
+                router.push(
+                  "/add-automation"
+                )
+              }
+            >
+              <Text
+                style={
+                  styles.emptyButtonText
+                }
+              >
+                Create Automation
+              </Text>
+            </TouchableOpacity>
           </View>
         ) : (
           schedules.map((schedule) => (
             <View
               key={schedule.id}
-              style={styles.scheduleCard}
+              style={
+                styles.scheduleCard
+              }
             >
               <View
                 style={
@@ -225,7 +361,9 @@ export default function AutomationScreen() {
                 </View>
 
                 <Switch
-                  value={schedule.enabled}
+                  value={
+                    schedule.enabled
+                  }
                   onValueChange={() =>
                     toggleSchedule(
                       schedule
@@ -243,34 +381,50 @@ export default function AutomationScreen() {
                 />
               </View>
 
-              <View style={styles.timeRow}>
-                <View style={styles.timeBox}>
+              <View
+                style={styles.timeRow}
+              >
+                <View
+                  style={styles.timeBox}
+                >
                   <Text
-                    style={styles.timeLabel}
+                    style={
+                      styles.timeLabel
+                    }
                   >
                     Start
                   </Text>
 
                   <Text
-                    style={styles.timeValue}
+                    style={
+                      styles.timeValue
+                    }
                   >
                     {schedule.startTime}
                   </Text>
                 </View>
 
-                <Text style={styles.arrow}>
+                <Text
+                  style={styles.arrow}
+                >
                   →
                 </Text>
 
-                <View style={styles.timeBox}>
+                <View
+                  style={styles.timeBox}
+                >
                   <Text
-                    style={styles.timeLabel}
+                    style={
+                      styles.timeLabel
+                    }
                   >
                     End
                   </Text>
 
                   <Text
-                    style={styles.timeValue}
+                    style={
+                      styles.timeValue
+                    }
                   >
                     {schedule.endTime}
                   </Text>
@@ -310,6 +464,25 @@ export default function AutomationScreen() {
                     : "Automation disabled"}
                 </Text>
               </View>
+
+              <TouchableOpacity
+                style={
+                  styles.deleteButton
+                }
+                onPress={() =>
+                  deleteSchedule(
+                    schedule
+                  )
+                }
+              >
+                <Text
+                  style={
+                    styles.deleteButtonText
+                  }
+                >
+                  Delete Automation
+                </Text>
+              </TouchableOpacity>
             </View>
           ))
         )}
@@ -319,14 +492,21 @@ export default function AutomationScreen() {
             💡
           </Text>
 
-          <View style={styles.infoContent}>
-            <Text style={styles.infoTitle}>
+          <View
+            style={styles.infoContent}
+          >
+            <Text
+              style={styles.infoTitle}
+            >
               Real-time synchronization
             </Text>
 
-            <Text style={styles.infoText}>
-              Changes made here are stored
-              in Firebase and are also
+            <Text
+              style={styles.infoText}
+            >
+              Automations created or
+              changed here are stored in
+              Firebase and automatically
               reflected in the hardware
               simulator.
             </Text>
@@ -367,6 +547,10 @@ const styles =
 
     header: {
       marginBottom: 22,
+      flexDirection: "row",
+      justifyContent:
+        "space-between",
+      alignItems: "center",
     },
 
     label: {
@@ -387,12 +571,30 @@ const styles =
       marginTop: 6,
       color: "#64748B",
       lineHeight: 20,
+      maxWidth: 300,
+    },
+
+    addButton: {
+      width: 48,
+      height: 48,
+      borderRadius: 16,
+      backgroundColor: "#2563EB",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+
+    addButtonText: {
+      color: "#FFFFFF",
+      fontSize: 30,
+      fontWeight: "500",
+      lineHeight: 32,
     },
 
     summaryCard: {
       flexDirection: "row",
       justifyContent:
         "space-around",
+      alignItems: "center",
       backgroundColor: "#0F172A",
       borderRadius: 22,
       paddingVertical: 22,
@@ -413,11 +615,30 @@ const styles =
       textAlign: "center",
     },
 
+    divider: {
+      width: 1,
+      height: 42,
+      backgroundColor: "#334155",
+    },
+
+    sectionHeader: {
+      flexDirection: "row",
+      justifyContent:
+        "space-between",
+      alignItems: "center",
+      marginBottom: 12,
+    },
+
     sectionTitle: {
       color: "#0F172A",
       fontSize: 20,
       fontWeight: "900",
-      marginBottom: 12,
+    },
+
+    sectionAction: {
+      color: "#2563EB",
+      fontSize: 13,
+      fontWeight: "800",
     },
 
     scheduleCard: {
@@ -539,6 +760,20 @@ const styles =
       color: "#64748B",
     },
 
+    deleteButton: {
+      marginTop: 12,
+      paddingVertical: 11,
+      borderRadius: 12,
+      backgroundColor: "#FEF2F2",
+      alignItems: "center",
+    },
+
+    deleteButtonText: {
+      color: "#DC2626",
+      fontSize: 12,
+      fontWeight: "800",
+    },
+
     emptyCard: {
       backgroundColor: "#FFFFFF",
       borderRadius: 20,
@@ -561,6 +796,20 @@ const styles =
       textAlign: "center",
       marginTop: 6,
       fontSize: 12,
+      lineHeight: 18,
+    },
+
+    emptyButton: {
+      marginTop: 18,
+      backgroundColor: "#2563EB",
+      paddingHorizontal: 18,
+      paddingVertical: 11,
+      borderRadius: 12,
+    },
+
+    emptyButtonText: {
+      color: "#FFFFFF",
+      fontWeight: "800",
     },
 
     infoCard: {

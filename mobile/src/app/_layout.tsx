@@ -18,6 +18,20 @@ export default function RootLayout() {
       />
 
       <Stack.Screen
+        name="automation"
+        options={{
+          title: "Automation",
+        }}
+      />
+
+      <Stack.Screen
+        name="add-automation"
+        options={{
+          title: "New Automation",
+        }}
+      />
+
+      <Stack.Screen
         name="floor/[id]"
         options={{
           title: "Floor Details",
@@ -28,6 +42,13 @@ export default function RootLayout() {
         name="device/[id]"
         options={{
           title: "Device Details",
+        }}
+      />
+
+      <Stack.Screen
+        name="camera/[id]"
+        options={{
+          title: "Camera",
         }}
       />
     </Stack>
