@@ -330,7 +330,7 @@ a {
 
   z-index: 10;
 
-  min-width: 175px;
+  min-width: 150px;
 
   display: flex;
   align-items: center;
@@ -338,7 +338,7 @@ a {
 
   gap: 15px;
 
-  padding: 11px 12px;
+  padding: 9px 10px;
 
   border-radius: 12px;
 
@@ -380,7 +380,7 @@ a {
 .device-info h4 {
   margin: 0;
 
-  font-size: 13px;
+  font-size: 12px;
 
   font-weight: 600;
 }
@@ -457,34 +457,85 @@ a {
    DEVICE POSITIONS ON HOUSE
 ===================================================== */
 
+/* Ground Floor */
+
 .living-room {
-  left: 25%;
+  left: 19%;
   bottom: 27%;
 }
 
-.kitchen {
-  left: 49%;
-  bottom: 28%;
+.kitchen-outlet {
+  left: 48%;
+  bottom: 20%;
 }
 
 .iron {
-  right: 17%;
-  bottom: 28%;
+  right: 18%;
+  bottom: 21%;
 }
 
+.front-camera {
+  right: 2%;
+  bottom: 37%;
+}
+
+.kitchen-light {
+  left: 48%;
+  bottom: 34%;
+}
+
+.tv-outlet {
+  left: 16%;
+  bottom: 40%;
+}
+
+.garden-light {
+  left: 3%;
+  bottom: 10%;
+}
+
+/* First Floor */
+
 .bedroom {
-  left: 20%;
-  top: 27%;
+  left: 16%;
+  top: 22%;
 }
 
 .hall-switch {
-  left: 47%;
+  left: 42%;
+  top: 31%;
+}
+
+.bedroom-outlet {
+  left: 27%;
+  top: 37%;
+}
+
+.balcony-light {
+  left: 42%;
+  top: 15%;
+}
+
+.hall-camera {
+  right: 31%;
   top: 38%;
 }
 
-.camera {
-  right: 13%;
-  top: 22%;
+/* Second Floor / Office area */
+
+.study-light {
+  right: 17%;
+  top: 11%;
+}
+
+.study-outlet {
+  right: 22%;
+  top: 27%;
+}
+
+.office-switch {
+  right: 2%;
+  top: 18%;
 }
 
 /* =====================================================
