@@ -216,122 +216,122 @@ export default function HomeScreen() {
 
         {/* Quick control */}
 
-<View style={styles.sectionHeader}>
-  <Text style={styles.sectionTitle}>
-    Quick Control
-  </Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>
+            Quick Control
+          </Text>
 
-  <TouchableOpacity
-    onPress={() =>
-      router.push("/devices")
-    }
-  >
-    <Text style={styles.sectionAction}>
-      All devices
-    </Text>
-  </TouchableOpacity>
-</View>
+          <TouchableOpacity
+            onPress={() =>
+              router.push("/devices")
+            }
+          >
+            <Text style={styles.sectionAction}>
+              All devices
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-<View style={styles.quickGrid}>
-  <TouchableOpacity
-    style={styles.quickCard}
-    onPress={() =>
-      router.push({
-        pathname: "/devices",
-        params: {
-          type: "LIGHT",
-        },
-      })
-    }
-  >
-    <View style={styles.quickIconBox}>
-      <Text style={styles.quickIcon}>
-        💡
-      </Text>
-    </View>
+        <View style={styles.quickGrid}>
+          <TouchableOpacity
+            style={styles.quickCard}
+            onPress={() =>
+              router.push({
+                pathname: "/devices",
+                params: {
+                  type: "LIGHT",
+                },
+              })
+            }
+          >
+            <View style={styles.quickIconBox}>
+              <Text style={styles.quickIcon}>
+                💡
+              </Text>
+            </View>
 
-    <Text style={styles.quickTitle}>
-      Lighting
-    </Text>
+            <Text style={styles.quickTitle}>
+              Lighting
+            </Text>
 
-    <Text style={styles.quickDescription}>
-      Control smart lights
-    </Text>
-  </TouchableOpacity>
+            <Text style={styles.quickDescription}>
+              Control smart lights
+            </Text>
+          </TouchableOpacity>
 
-  <TouchableOpacity
-    style={styles.quickCard}
-    onPress={() =>
-      router.push({
-        pathname: "/devices",
-        params: {
-          type: "OUTLET",
-        },
-      })
-    }
-  >
-    <View style={styles.quickIconBox}>
-      <Text style={styles.quickIcon}>
-        🔌
-      </Text>
-    </View>
+          <TouchableOpacity
+            style={styles.quickCard}
+            onPress={() =>
+              router.push({
+                pathname: "/devices",
+                params: {
+                  type: "OUTLET",
+                },
+              })
+            }
+          >
+            <View style={styles.quickIconBox}>
+              <Text style={styles.quickIcon}>
+                🔌
+              </Text>
+            </View>
 
-    <Text style={styles.quickTitle}>
-      Outlets
-    </Text>
+            <Text style={styles.quickTitle}>
+              Outlets
+            </Text>
 
-    <Text style={styles.quickDescription}>
-      Smart power controls
-    </Text>
-  </TouchableOpacity>
+            <Text style={styles.quickDescription}>
+              Smart power controls
+            </Text>
+          </TouchableOpacity>
 
-  <TouchableOpacity
-    style={styles.quickCard}
-    onPress={() =>
-      router.push("/automation")
-    }
-  >
-    <View style={styles.quickIconBox}>
-      <Text style={styles.quickIcon}>
-        ⏱️
-      </Text>
-    </View>
+          <TouchableOpacity
+            style={styles.quickCard}
+            onPress={() =>
+              router.push("/automation")
+            }
+          >
+            <View style={styles.quickIconBox}>
+              <Text style={styles.quickIcon}>
+                ⏱️
+              </Text>
+            </View>
 
-    <Text style={styles.quickTitle}>
-      Automation
-    </Text>
+            <Text style={styles.quickTitle}>
+              Automation
+            </Text>
 
-    <Text style={styles.quickDescription}>
-      Schedules and rules
-    </Text>
-  </TouchableOpacity>
+            <Text style={styles.quickDescription}>
+              Schedules and rules
+            </Text>
+          </TouchableOpacity>
 
-  <TouchableOpacity
-    style={styles.quickCard}
-    onPress={() =>
-      router.push({
-        pathname: "/devices",
-        params: {
-          type: "CAMERA",
-        },
-      })
-    }
-  >
-    <View style={styles.quickIconBox}>
-      <Text style={styles.quickIcon}>
-        📷
-      </Text>
-    </View>
+          <TouchableOpacity
+            style={styles.quickCard}
+            onPress={() =>
+              router.push({
+                pathname: "/devices",
+                params: {
+                  type: "CAMERA",
+                },
+              })
+            }
+          >
+            <View style={styles.quickIconBox}>
+              <Text style={styles.quickIcon}>
+                📷
+              </Text>
+            </View>
 
-    <Text style={styles.quickTitle}>
-      Security
-    </Text>
+            <Text style={styles.quickTitle}>
+              Security
+            </Text>
 
-    <Text style={styles.quickDescription}>
-      Camera monitoring
-    </Text>
-  </TouchableOpacity>
-</View>
+            <Text style={styles.quickDescription}>
+              Camera monitoring
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         {/* Floors */}
 
@@ -431,11 +431,16 @@ export default function HomeScreen() {
                 <TouchableOpacity
                   key={device.id}
                   style={styles.deviceRow}
-                  onPress={() =>
+                  onPress={() => {
+                    const deviceRouteId =
+                      device.id === "hall-switch-panel"
+                        ? "device005"
+                        : device.id;
+
                     router.push(
-                      `/device/${device.id}`
-                    )
-                  }
+                      `/device/${deviceRouteId}`
+                    );
+                  }}
                 >
                   <View style={styles.deviceIconBox}>
                     <Text style={styles.deviceIcon}>
@@ -486,7 +491,7 @@ export default function HomeScreen() {
           style={[
             styles.safetyCard,
             !safetyOk &&
-              styles.safetyCardWarning,
+            styles.safetyCardWarning,
           ]}
         >
           <View style={styles.safetyIconBox}>
@@ -513,14 +518,14 @@ export default function HomeScreen() {
             style={[
               styles.safetyBadge,
               !safetyOk &&
-                styles.warningBadge,
+              styles.warningBadge,
             ]}
           >
             <Text
               style={[
                 styles.safetyBadgeText,
                 !safetyOk &&
-                  styles.warningBadgeText,
+                styles.warningBadgeText,
               ]}
             >
               {safetyOk ? "SAFE" : "CHECK"}

@@ -10,7 +10,10 @@ import { Device } from "../types/Device";
 export function subscribeToDevices(
   callback: (devices: Device[]) => void
 ) {
-  const devicesRef = ref(database, "devices");
+  const devicesRef = ref(
+    database,
+    "devices"
+  );
 
   return onValue(
     devicesRef,
@@ -29,11 +32,18 @@ export function subscribeToDevices(
 
       const devices: Device[] =
         Object.entries(data).map(
-          ([id, value]) => ({
-            id,
-            ...(value as Omit<Device, "id">),
+          ([firebaseId, value]) => ({
+            ...(value as Device),
+
+            // Firebase key must be the final id
+            id: firebaseId,
           })
         );
+
+      console.log(
+        "📱 Converted mobile devices:",
+        devices
+      );
 
       callback(devices);
     },
@@ -55,6 +65,13 @@ export async function toggleDevice(
     device.status === "ON"
       ? "OFF"
       : "ON";
+
+  console.log(
+    "⚡ Updating device:",
+    device.id,
+    "to",
+    newStatus
+  );
 
   await update(
     ref(

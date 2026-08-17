@@ -10,25 +10,36 @@ import { Device } from "../types/Device";
 export function subscribeToDevices(
   callback: (devices: Device[]) => void
 ) {
-  const devicesRef = ref(database, "devices");
+  const devicesRef = ref(
+    database,
+    "devices"
+  );
 
-  return onValue(devicesRef, (snapshot) => {
-    const data = snapshot.val();
+  return onValue(
+    devicesRef,
+    (snapshot) => {
+      const data =
+        snapshot.val();
 
-    if (!data) {
-      callback([]);
-      return;
+      if (!data) {
+        callback([]);
+        return;
+      }
+
+      const devices: Device[] =
+        Object.entries(data).map(
+          ([firebaseId, value]) => ({
+            ...(value as Device),
+
+            // IMPORTANT:
+            // Firebase key must win
+            id: firebaseId,
+          })
+        );
+
+      callback(devices);
     }
-
-    const devices: Device[] = Object.entries(data).map(
-      ([id, value]) => ({
-        id,
-        ...(value as Omit<Device, "id">),
-      })
-    );
-
-    callback(devices);
-  });
+  );
 }
 
 export async function setDeviceStatus(
@@ -36,7 +47,10 @@ export async function setDeviceStatus(
   status: Device["status"]
 ) {
   await update(
-    ref(database, `devices/${deviceId}`),
+    ref(
+      database,
+      `devices/${deviceId}`
+    ),
     {
       status,
     }
