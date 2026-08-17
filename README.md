@@ -32,25 +32,6 @@ The system supports different device types including:
 
 Device status changes are synchronized between the mobile application, Firebase Realtime Database, and the web-based hardware simulator.
 
-🏗️ System Architecture
-               ┌─────────────────────────┐
-               │     Mobile App          │
-               │ React Native + Expo     │
-               └────────────┬────────────┘
-                            │
-                            │ Read / Write
-                            ▼
-               ┌─────────────────────────┐
-               │ Firebase Realtime       │
-               │ Database                │
-               └────────────┬────────────┘
-                            │
-                            │ Real-Time Listener
-                            ▼
-               ┌─────────────────────────┐
-               │ Web Hardware Simulator  │
-               │ React + TypeScript      │
-               └─────────────────────────┘
 
 🛠️ Technologies Used
 
@@ -74,34 +55,6 @@ Visual Studio Code
 Git
 GitHub
 Expo EAS Build
-
-📂 Project Structure
-smart-home-system/
-│
-├── mobile/
-│   ├── src/
-│   │   ├── app/
-│   │   ├── components/
-│   │   ├── config/
-│   │   ├── hooks/
-│   │   ├── services/
-│   │   └── types/
-│   │
-│   ├── assets/
-│   ├── app.json
-│   ├── eas.json
-│   └── package.json
-│
-├── simulator/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── types/
-│   │
-│   └── package.json
-│
-└── README.md
 
 🚀 Running the Mobile Application
 
