@@ -332,6 +332,26 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={styles.quickCard}
+          onPress={() =>
+            router.push("/energy")
+          }
+        >
+          <View style={styles.quickIconBox}>
+            <Text style={styles.quickIcon}>
+              ⚡
+            </Text>
+          </View>
+
+          <Text style={styles.quickTitle}>
+            Energy
+          </Text>
+
+          <Text style={styles.quickDescription}>
+            Monitor power usage
+          </Text>
+        </TouchableOpacity>
 
         {/* Floors */}
 

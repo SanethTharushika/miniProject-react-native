@@ -1,16 +1,18 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "SmartNest",
+    "slug": "smartnest",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mobile",
+    "scheme": "smartnest",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.saneth.smartnest",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -38,6 +40,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "785032d8-065d-4ff9-af73-9551d5f4453b"
+      }
     }
   }
 }
